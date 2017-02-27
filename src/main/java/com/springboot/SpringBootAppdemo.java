@@ -10,3 +10,4 @@ public class SpringBootAppdemo {
 	}
 
 }
+//http://localhost:8080/springboot/person
