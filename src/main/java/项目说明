@@ -1,0 +1,49 @@
+1.Spring Boot提供了spring-boot-starter-web为web开发予以支持，
+spring-boot-starter-web为我们提供了嵌入的Tomcat以及Spring Mvc的依赖。
+而web相关的自动配置存储在spring-boot-autoconfigure.jar和
+org.springframework.boot.autoconfigure.web下。
+
+2.Spring Boot提供了大量的模板引擎，包括FreeMarker,Groovy,Thymeleaf,
+Velocity和Mustache，Spring Boot中推荐使用Thymeleaf作为模板引擎，它提供
+了完美的Spring Mvc支持。
+
+3.Thymeleaf是一个java类库，它是一个xml/xhtml/html5的模板引擎，可以作为
+MVC的web应用的View层。
+Thymeleaf还提供了额外的模块与Spring MVC 集成，我们可以使用Thymeleaf完全
+代替jsp.
+
+4.本项目添加了Thymeleaf的依赖
+本项目的index.html是一个基本的Thymeleaf模板的页面
+通过xmlns:th="http://www.thymeleaf.org"命名空间，将镜头页面转化为动态
+的视图。需要进行动态处理的元素将使用  “th:” 为前缀。
+通过 “@{}” 引用web静态资源
+通过 “${}” 访问model中的属性。
+
+使用<span th:text="${person.name}"></span>访问model中的person的
+name属性，需要处理的动态内容需要加上 “th:” 前缀。
+
+使用 th:each 来做循环迭代  ( th:each="person:${people}" ),person
+作为迭代元素来使用，访问迭代元素中的属性。
+
+通过 （ th:if="${not #lists.isEmpty(people)}" ）表达式判断people是否
+为空。
+Thymeleaf支持 >,<,>=,<=,==,!=作为比较条件，同时也支持将SpringEL表达式
+语言用于条件中。
+
+通过<script type="text/javascript" th:inline="javascript">添加到
+script标签，这样JavaScript代码就可以访问model中的属性。
+通过 “[[${}]]” 格式获得实际的值。
+
+需要在html中访问model属性，如我们需要在列表后单击每一行后面的按钮获得model中的值，
+可做如下处理：
+<li class="list-group-item" th:each="person:${people}">
+    <span th:text="${person.name}"></span>
+    <span th:text="${person.age}"></span>
+    <button class="btn" th:onclick="'getName(\''+${person.name}+'\');'">获得名字</button>
+</li>
+
+5.Spring Boot的Thymeleaf的支持，通过ThymeleafAutoConfiguration类
+对集成所需的Bean进行自动配置，包括templateResolver,templateEngine和
+thymeleafViewResolver的配置。
+通过ThymeleafProperties来配置Thymeleaf,在application.properties中，以spring.thymeleaf开头来配置
+@ConfigurationProperties("spring.thymeleaf")
